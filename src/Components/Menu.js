@@ -1,45 +1,80 @@
-import menu1 from '../Pizza_Images/menu1.jpg';
-import menu2 from '../Pizza_Images/menu2.jpg';
-import menu3 from '../Pizza_Images/menu3.jpg';
-import menu4 from '../Pizza_Images/menu4.jpg';
+import React from "react";
+import "bootstrap/dist/css/bootstrap.min.css";
+import "bootstrap-icons/font/bootstrap-icons.css"; // Import Bootstrap Icons
 
-const Menu = () => {
-    const menuItems = [
-        { name: "Margherita Pizza", price: "$40.00", salePrice: "$24.00", image: menu1, tag: "SALE" },
-        { name: "Mushroom Pizza", price: "$25.00", image: menu2 },
-        { name: "Hawaiian Pizza", price: "$30.00", image: menu3, tag: "NEW" },
-        { name: "Pesto Pizza", price: "$30.00", salePrice: "$20.00", image: menu4, tag: "SALE" },
-    ];
-
+const ProductCard = ({ isOnSale }) => {
     return (
-        <div className="container my-5">
-            <h2 className="text-left">Our Menu</h2>
-            <div className="row">
-                {menuItems.map((item, index) => (
-                    <div className="col-md-3" key={index}>
-                        <div className="card position-relative">
-                            {item.tag && <span className="badge bg-warning text-dark position-absolute top-0 start-0 m-1">{item.tag}</span>}
-                            <img src={item.image} className="card-img-top" alt={item.name} />
-                            <div className="card-body text-center">
-                                <h5>{item.name}</h5>
-                                <p>
-                                    {item.salePrice ? (
-                                        <>
-                                            <del style={{ color: 'black' }}>{item.price}</del>{' '}
-                                            <span style={{ color: 'orange'}}>{item.salePrice}</span>
-                                        </>
-                                    ) : (
-                                        <span style={{ color: 'orange'}}>{item.price}</span>
-                                    )}
-                                </p>
-                                <button className="btn btn-dark" style={{ width: '100%' }}>Buy</button>
-                            </div>
-                        </div>
+        <div className="col-3">
+            <div className="card shadow-sm border-0 position-relative" 
+            style={{overflow: "hidden",}}>
+                <div className="position-relative">
+                    <div
+                        className="d-flex justify-content-center align-items-center"
+                        style={{
+                            width: "100%",
+                            height: "280px",
+                            backgroundColor: "#f0f0f0",
+                            fontSize: "24px",
+                            color: "#999",
+                        }}
+                    >
+                        280 x 280
                     </div>
-                ))}
+                    {isOnSale && (
+                        <div
+                            style={{
+                                position: "absolute",
+                                top: "20px",
+                                right: "-80px",
+                                backgroundColor: "orange",
+                                color: "white",
+                                width: "200px",
+                                height: "40px",
+                                textAlign: "center",
+                                lineHeight: "40px",
+                                fontSize: "20px",
+                                fontWeight: "bold",
+                                transform: "rotate(45deg)",
+                                zIndex: 1,
+                            }}
+                        >
+                            Sale
+                        </div>
+                    )}
+                </div>
+                <div className="card-body text-left">
+                    <h5 className="card-title">Product</h5>
+                    <p className="card-text mb-2">
+                        <span className="text-muted text-decoration-line-through">
+                            100.000 vnđ
+                        </span>
+                        <span className="ms-2" style={{ paddingLeft: '37%', color: 'orange' }}>80.000 vnđ</span>
+                    </p>
+                    <button className="btn btn-primary btn-sm me-2">
+                        <i className="bi bi-cart"></i>
+                    </button>
+                    <button className="btn btn-outline-secondary btn-sm">
+                        Xem chi tiết
+                    </button>
+                </div>
             </div>
         </div>
     );
 };
 
-export default Menu;
+const ProductLayout = () => {
+    return (
+        <div className="container mt-4">
+            <h2 className="mb-3" style={{ color: 'black' }}>NEW PRODUCT</h2>
+            <p className="text-muted mb-4">List product description</p>
+            <div className="row g-4">
+                <ProductCard />
+                <ProductCard />
+                <ProductCard />
+                <ProductCard isOnSale={true} />
+            </div>
+        </div>
+    );
+};
+
+export default ProductLayout;
